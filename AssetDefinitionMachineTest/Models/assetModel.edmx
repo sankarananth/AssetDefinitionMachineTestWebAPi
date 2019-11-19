@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="assetDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AssetDef">
+          <Key>
+            <PropertyRef Name="ad_id" />
+          </Key>
+          <Property Name="ad_id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ad_name" Type="varchar" MaxLength="30" />
+          <Property Name="ad_type_id" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ad_class" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Assettype">
+          <Key>
+            <PropertyRef Name="at_id" />
+          </Key>
+          <Property Name="at_id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="at_name" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="logintbl">
+          <Key>
+            <PropertyRef Name="l_id" />
+          </Key>
+          <Property Name="l_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uname" Type="varchar" MaxLength="50" />
+          <Property Name="pass" Type="varchar" MaxLength="50" />
+          <Property Name="utype" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__AssetDef__ad_typ__160F4887">
+          <End Role="Assettype" Type="Self.Assettype" Multiplicity="0..1" />
+          <End Role="AssetDef" Type="Self.AssetDef" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Assettype">
+              <PropertyRef Name="at_id" />
+            </Principal>
+            <Dependent Role="AssetDef">
+              <PropertyRef Name="ad_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="assetDBModelStoreContainer">
+          <EntitySet Name="AssetDef" EntityType="Self.AssetDef" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Assettype" EntityType="Self.Assettype" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="logintbl" EntityType="Self.logintbl" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AssetDef__ad_typ__160F4887" Association="Self.FK__AssetDef__ad_typ__160F4887">
+            <End Role="Assettype" EntitySet="Assettype" />
+            <End Role="AssetDef" EntitySet="AssetDef" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="assetDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AssetDef">
+          <Key>
+            <PropertyRef Name="ad_id" />
+          </Key>
+          <Property Name="ad_id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ad_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ad_type_id" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ad_class" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Assettype" Relationship="Self.FK__AssetDef__ad_typ__160F4887" FromRole="AssetDef" ToRole="Assettype" />
+        </EntityType>
+        <EntityType Name="Assettype">
+          <Key>
+            <PropertyRef Name="at_id" />
+          </Key>
+          <Property Name="at_id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="at_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AssetDefs" Relationship="Self.FK__AssetDef__ad_typ__160F4887" FromRole="Assettype" ToRole="AssetDef" />
+        </EntityType>
+        <EntityType Name="logintbl">
+          <Key>
+            <PropertyRef Name="l_id" />
+          </Key>
+          <Property Name="l_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="utype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__AssetDef__ad_typ__160F4887">
+          <End Role="Assettype" Type="Self.Assettype" Multiplicity="0..1" />
+          <End Role="AssetDef" Type="Self.AssetDef" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Assettype">
+              <PropertyRef Name="at_id" />
+            </Principal>
+            <Dependent Role="AssetDef">
+              <PropertyRef Name="ad_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="assetDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AssetDefs" EntityType="Self.AssetDef" />
+          <EntitySet Name="Assettypes" EntityType="Self.Assettype" />
+          <EntitySet Name="logintbls" EntityType="Self.logintbl" />
+          <AssociationSet Name="FK__AssetDef__ad_typ__160F4887" Association="Self.FK__AssetDef__ad_typ__160F4887">
+            <End Role="Assettype" EntitySet="Assettypes" />
+            <End Role="AssetDef" EntitySet="AssetDefs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="assetDBModelStoreContainer" CdmEntityContainer="assetDBEntities">
+          <EntitySetMapping Name="AssetDefs">
+            <EntityTypeMapping TypeName="assetDBModel.AssetDef">
+              <MappingFragment StoreEntitySet="AssetDef">
+                <ScalarProperty Name="ad_id" ColumnName="ad_id" />
+                <ScalarProperty Name="ad_name" ColumnName="ad_name" />
+                <ScalarProperty Name="ad_type_id" ColumnName="ad_type_id" />
+                <ScalarProperty Name="ad_class" ColumnName="ad_class" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Assettypes">
+            <EntityTypeMapping TypeName="assetDBModel.Assettype">
+              <MappingFragment StoreEntitySet="Assettype">
+                <ScalarProperty Name="at_id" ColumnName="at_id" />
+                <ScalarProperty Name="at_name" ColumnName="at_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="logintbls">
+            <EntityTypeMapping TypeName="assetDBModel.logintbl">
+              <MappingFragment StoreEntitySet="logintbl">
+                <ScalarProperty Name="l_id" ColumnName="l_id" />
+                <ScalarProperty Name="uname" ColumnName="uname" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="utype" ColumnName="utype" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
